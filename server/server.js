@@ -20,7 +20,12 @@ const port = process.env.PORT || 4000;
 await connectDB();
 await connectCloudinary();
 
-const allowedOrigins = ['http://localhost:5173'];
+// const allowedOrigins = ['http://localhost:5173'];
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true // 👈 this is REQUIRED if you're sending cookies
+  }));
+  
 
 app.post('/stripe',express.raw({ type: 'application/json' }),stripeWebhooks)
 

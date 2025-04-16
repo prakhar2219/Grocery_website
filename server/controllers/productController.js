@@ -4,7 +4,7 @@ export const addProduct = async (req, res) => {
   try {
     let productData = JSON.parse(req.body.productData);
     const images = req.files;
-    let imageUrls = await promise.all(
+    let imageUrls = await Promise.all(
       images.map(async (image) => {
         let result = await Cloudinary.uploader.upload(image.path, {
           resource_type: "image",
@@ -14,7 +14,7 @@ export const addProduct = async (req, res) => {
     );
     await Product.create({
       ...productData,
-      image: imageUrl,
+      image: imageUrls,
     });
     res.status(201).json({
       success: true,

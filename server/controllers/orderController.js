@@ -2,7 +2,7 @@ import Order from "../models/order.js";
 import stripe from "stripe";
 import Product from "../models/Product.js";
 import e from "express";
-import User from "../models/user.js";
+import User from "../models/User.js";
 import dotenv from "dotenv";
 dotenv.config();
 export const placeOrderCOD = async (req, res) => {
