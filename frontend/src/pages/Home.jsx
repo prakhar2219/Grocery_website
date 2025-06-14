@@ -1,6 +1,6 @@
 import React from 'react'
 import MainBanner from '../component/MainBanner'
-import Categories from '../component/categories'
+import Categories from '../component/Categories'
 import BestSeller from '../component/BestSeller'
 import BottomBanner from '../component/BottomBanner'
 function Home() {
