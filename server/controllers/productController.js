@@ -1,12 +1,12 @@
-import pkg from 'cloudinary';
-const { v2: Cloudinary } = pkg;
+import {v2 as cloudinary} from 'cloudinary';
+import Product from '../models/Product.js';
 export const addProduct = async (req, res) => {
   try {
     let productData = JSON.parse(req.body.productData);
     const images = req.files;
     let imageUrls = await Promise.all(
       images.map(async (image) => {
-        let result = await Cloudinary.uploader.upload(image.path, {
+        let result = await cloudinary.uploader.upload(image.path, {
           resource_type: "image",
         });
         return result.secure_url;
@@ -14,7 +14,7 @@ export const addProduct = async (req, res) => {
     );
     await Product.create({
       ...productData,
-      image: imageUrls,
+      images: imageUrls
     });
     res.status(201).json({
       success: true,
@@ -34,8 +34,7 @@ export const productList = async (req, res) => {
        const products = await Product.find({});
         res.status(200).json({
             success: true,
-            message: "Product list fetched successfully",
-            products,
+            products
         }); 
     } catch (error) {
         console.log(error.message);
@@ -52,8 +51,7 @@ export const productById = async (req, res) => {
         const product = await Product.findById(id);
         res.status(200).json({
             success: true,
-            message: "Product fetched successfully",
-            product,
+            product
         });
     } catch (error) {
         console.log(error.message);

@@ -2,12 +2,12 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 const authSeller = async (req, res, next) => {
-  const { sellerToken } = req.cookies.token;
-  if (!sellerToken) {
+  const { SellerToken } = req.cookies;
+  if (!SellerToken) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
   try {
-    const tokenDecoded = jwt.verify(sellerToken, process.env.JWT_SECRET);
+    const tokenDecoded = jwt.verify(SellerToken, process.env.JWT_SECRET);
     if (tokenDecoded.email === process.env.SELLER_EMAIL) {
       next();
     } else {

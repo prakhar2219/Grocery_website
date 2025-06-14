@@ -3,6 +3,12 @@ import Address from "../models/address.js";
 export const addAddress = async (req, res) => {
     try {
        const {address,userId} = req.body;
+        if (!userId) {
+            return res.status(400).json({
+                success: false,
+                message: "Missing userId in request body",
+            });
+        }
        await Address.create({...address,userId});
        res.status(200).json({
            success: true,
@@ -18,14 +24,19 @@ export const addAddress = async (req, res) => {
     }
 }
 
+  
+
+
 export const getAddress = async (req, res) => {
     try {
-       const {userId} = req.body;
+    const {userId} = req.query; // ✅ Correct for GET request
+     if (!userId) {
+      return res.status(400).json({ success: false, message: "Missing userId" });
+    }
        const addresses = await Address.find({userId});
        res.status(200).json({
            success: true,
-           message: "Address fetched successfully",
-           addresses,
+           addresses
        }); 
     } catch (error) {
         console.log(error.message);
